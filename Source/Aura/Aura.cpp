@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Kyle Lautenbach 2025
 
 #include "Aura.h"
 #include "Modules/ModuleManager.h"
