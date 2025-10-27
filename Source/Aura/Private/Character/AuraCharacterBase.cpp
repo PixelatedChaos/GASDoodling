@@ -13,6 +13,10 @@ AAuraCharacterBase::AAuraCharacterBase()
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
 
 void AAuraCharacterBase::BeginPlay()
 {
