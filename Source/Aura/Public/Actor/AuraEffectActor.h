@@ -43,6 +43,9 @@ struct FAppliedEffectData
 	TSubclassOf<UGameplayEffect> GameplayEffectClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	float EffectLevel = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	EEffectApplicationPolicy EffectApplicationPolicy = EEffectApplicationPolicy::ApplyOnOverlap;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
@@ -77,8 +80,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	EActorDestructionPolicy ActorDestructionPolicy = EActorDestructionPolicy::DoNotDestroy;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	float ActorLevel = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects", meta = (instanc))
+	bool bUseActorLevelForAllEffects = true;
+	
 	UPROPERTY(BlueprintReadOnly, Category = "Applied Effects")
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
+
+	
 
 private:
 };

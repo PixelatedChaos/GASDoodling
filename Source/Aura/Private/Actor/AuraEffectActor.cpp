@@ -24,13 +24,14 @@ void AAuraEffectActor::BeginPlay()
 void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, FAppliedEffectData InGameplayEffectData) 
 {
 	checkf(InGameplayEffectData.GameplayEffectClass, TEXT("Attempting to apply non-existent gameplay effect class!"));
-	
+
+	const float EffectLevel = bUseActorLevelForAllEffects ? ActorLevel : InGameplayEffectData.EffectLevel;
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (TargetASC)
 	{
 		FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
 		EffectContextHandle.AddSourceObject(this);
-		const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(InGameplayEffectData.GameplayEffectClass, 1.0f, EffectContextHandle);
+		const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(InGameplayEffectData.GameplayEffectClass, EffectLevel, EffectContextHandle);
 		const FActiveGameplayEffectHandle ActiveEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 
 		const bool bIsInfinite = EffectSpecHandle.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;
