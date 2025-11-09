@@ -24,6 +24,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void InitAbilityActorInfo();
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
@@ -33,4 +34,5 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
+	
 };
