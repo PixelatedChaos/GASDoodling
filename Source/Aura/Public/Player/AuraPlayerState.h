@@ -25,9 +25,9 @@ public:
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "AbilitySystem")
+	UPROPERTY(VisibleAnywhere, Category = "AbilitySystem")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
-	UPROPERTY(BlueprintReadOnly, Category = "AbilitySystem")
+	UPROPERTY(VisibleAnywhere, Category = "AbilitySystem")
 	TObjectPtr<UAttributeSet> AttributeSet;
 };

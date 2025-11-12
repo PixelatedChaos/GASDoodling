@@ -3,6 +3,9 @@
 
 #include "Character/AuraCharacterBase.h"
 
+#include "AbilitySystemComponent.h"
+#include "GameplayEffect.h"
+
 
 AAuraCharacterBase::AAuraCharacterBase()
 {
@@ -26,6 +29,18 @@ void AAuraCharacterBase::BeginPlay()
 
 void AAuraCharacterBase::InitAbilityActorInfo()
 {
+}
+
+void AAuraCharacterBase::InitializePrimaryAttributes() const
+{
+	checkf(DefaultPrimaryAttributes, TEXT("DefaultPrimaryAttributes in CharacterBase missing!"));
+	
+	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
+	check(IsValid(ASC));
+	
+	const FGameplayEffectContextHandle ContextHandle = ASC->MakeEffectContext();
+	const FGameplayEffectSpecHandle AttributeEffectSpecHandle = ASC->MakeOutgoingSpec(DefaultPrimaryAttributes, 1.0f, ContextHandle);
+	ASC->ApplyGameplayEffectSpecToTarget(*AttributeEffectSpecHandle.Data.Get(), ASC);	
 }
 
 
