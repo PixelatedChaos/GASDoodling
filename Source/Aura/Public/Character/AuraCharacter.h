@@ -27,6 +27,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	TObjectPtr<UCameraComponent> PlayerCamera;
+
+	/* Begin Combat Interface*/
+	virtual int32 GetEntityLevel() override;
+	/* End Combat Interface*/
 	
 protected:
 	virtual void InitAbilityActorInfo() override;
