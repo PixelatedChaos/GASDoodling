@@ -33,7 +33,7 @@ void AAuraCharacterBase::InitAbilityActorInfo()
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> AppliedEffect, float Level) const
 {
-	checkf(AppliedEffect, TEXT("Applied effect not valid!"));
+	checkf(AppliedEffect, TEXT("Applied effect not valid! %s"), *AppliedEffect->GetClass()->GetName());
 	
 	UAbilitySystemComponent* ASC = GetAbilitySystemComponent();
 	check(IsValid(ASC));
@@ -47,6 +47,7 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 {
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf((DefaultSecondaryAttributes), 1.f);
+	ApplyEffectToSelf((DefaultVitalAttributes), 1.f);
 }
 
 

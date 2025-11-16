@@ -20,8 +20,6 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Calculation Parameters")
-	FGameplayEffectAttributeCaptureDefinition AttributeDef;
-	UPROPERTY(EditAnywhere, Category = "Calculation Parameters")
 	float BaseValue = 10.f;
 	UPROPERTY(EditAnywhere, Category = "Calculation Parameters")
 	float AttributeMultiplier = 1.0f;
