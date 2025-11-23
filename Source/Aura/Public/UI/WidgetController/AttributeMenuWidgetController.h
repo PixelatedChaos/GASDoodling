@@ -6,8 +6,10 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "AttributeMenuWidgetController.generated.h"
 
+struct FGameplayTag;
 class UAttributeInfo;
 struct FAuraAttributeInfo;
+struct FGameplayAttribute;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FAuraAttributeInfo&, Info);
 /**
@@ -25,6 +27,8 @@ public:
 	FAttributeInfoSignature AttributeInfoDelegate;
 
 protected:
+	void BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GAS|Attributes")
 	TObjectPtr<UAttributeInfo> AttributeInfo;
 };
