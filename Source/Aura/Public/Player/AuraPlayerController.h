@@ -29,9 +29,13 @@ protected:
 	virtual void SetupInputComponent() override;
 	
 	virtual void CursorTrace();
+	virtual void AutoRun();
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	bool bDebugMovementPath = false;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Cursor")
+	FHitResult CursorHit;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Input")

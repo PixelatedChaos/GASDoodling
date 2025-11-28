@@ -8,3 +8,8 @@ int32 ICombatInterface::GetEntityLevel()
 {
 	return 0;
 }
+
+FVector ICombatInterface::GetCombatSocketLocation()
+{
+	return FVector::ZeroVector;
+}

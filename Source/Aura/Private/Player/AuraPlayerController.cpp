@@ -59,11 +59,31 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 
 	CursorTrace();
+	AutoRun();	
+}
+
+void AAuraPlayerController::AutoRun()
+{
+	if (!bAutoRunning) return;
+	
+	if (APawn* ControlledPawn = GetPawn())
+	{
+		const FVector LocationOnSpline = MovementSpline->FindLocationClosestToWorldLocation(
+			ControlledPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+		const FVector TravelDirection = MovementSpline->FindDirectionClosestToWorldLocation(
+			LocationOnSpline, ESplineCoordinateSpace::World);
+		ControlledPawn->AddMovementInput(TravelDirection.GetSafeNormal());
+
+		const float DistanceToDestination = (LocationOnSpline - CachedDestination).Length();
+		if (DistanceToDestination <= AutoRunAcceptanceRadius)
+		{
+			bAutoRunning = false;
+		}
+	}
 }
 
 void AAuraPlayerController::CursorTrace()
 {
-	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit)
 	{
@@ -73,29 +93,11 @@ void AAuraPlayerController::CursorTrace()
 	LastHoverActor = CurrentHoverActor;
 	CurrentHoverActor = CursorHit.GetActor();
 
-	if (!LastHoverActor)
+	if (LastHoverActor != CurrentHoverActor)
 	{
-		if (CurrentHoverActor)
-		{
-			CurrentHoverActor->HighlightActor();
-		}
-	}
-	else
-	{
-		if (!CurrentHoverActor)
-		{
-			LastHoverActor->UnHighlightActor();
-		}
-		else
-		{
-			if (LastHoverActor != CurrentHoverActor)
-			{
-				CurrentHoverActor->HighlightActor();
-				LastHoverActor->UnHighlightActor();
-			}			
-		}
-	}
-	
+		if (LastHoverActor) LastHoverActor->UnHighlightActor();
+		if (CurrentHoverActor) CurrentHoverActor->HighlightActor();
+	}	
 }
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -154,6 +156,10 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 						DrawDebugSphere(GetWorld(), Point, 8.f, 8, FColor::Green, false, 5.f);
 					}					
 				}
+				if (NavPath->PathPoints.Num() > 0)
+				{
+					CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
+				}				
 				bAutoRunning = true;
 			}
 		}
@@ -181,13 +187,9 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	{
 		FollowTime += GetWorld()->GetDeltaSeconds();
 		
-		FHitResult Hit;
-		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		if (CursorHit.bBlockingHit)
 		{
-			if (Hit.IsValidBlockingHit())
-			{
-				CachedDestination = Hit.ImpactPoint;
-			}
+			CachedDestination = CursorHit.ImpactPoint;			
 		}
 		if (APawn* ControlledPawn = GetPawn())
 		{

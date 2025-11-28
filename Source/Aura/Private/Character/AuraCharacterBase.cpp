@@ -32,6 +32,12 @@ void AAuraCharacterBase::InitAbilityActorInfo()
 {
 }
 
+FVector AAuraCharacterBase::GetCombatSocketLocation()
+{
+	check(WeaponMesh);
+	return WeaponMesh->GetSocketLocation(WeaponTipSocketName);
+}
+
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> AppliedEffect, float Level) const
 {
 	checkf(AppliedEffect, TEXT("Applied effect not valid! %s"), *AppliedEffect->GetClass()->GetName());
