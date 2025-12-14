@@ -21,7 +21,7 @@ protected:
 		const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Projectile")
-	virtual void SpawnProjectile();
+	virtual void SpawnProjectile(const FVector& ProjectileTargetLocation);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Projectile");
 	TSubclassOf<AAuraProjectile> ProjectileClass;
