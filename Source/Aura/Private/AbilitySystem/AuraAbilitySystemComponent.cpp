@@ -21,7 +21,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 		if (const UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(AbilitySpec.Ability))
 		{
 			AbilitySpec.GetDynamicSpecSourceTags().AddTag(AuraAbility->StartupInputTag);
-			GiveAbility(AbilitySpec);	GiveAbility(AbilitySpec);	
+			GiveAbility(AbilitySpec);	
 		}					
 	}
 }
